@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="style.css">
+<body>
+  <div class="container">
+    <header>
+      <h1>Daily Balance Tracker</h1>
+      <div class="muted">Local & simple — data saved in Database</div>
+    </header>
+
+    <div class="card grid cols-3">
+      <!-- Left: input form -->
+      <div>
+        <h3>Add Transaction</h3>
+        <form id="txForm">
+          <div class="row">
+            <select id="txType">
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <input id="txAmount" type="number" step="0.01" placeholder="Amount" required />
+          </div>
+          <div class="row" style="margin-top:8px">
+            <input id="txCategory" placeholder="Category (e.g., Food, Salary)" />
+            <input id="txDate" type="date" />
+          </div>
+          <div class="row" style="margin-top:8px">
+            <input id="txDesc" placeholder="Description (optional)" />
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button type="submit">Add</button>
+            <button id="seedDemo" type="button" class="small-btn">Seed demo</button>
+            <button id="clearAll" type="button" class="small-btn">Clear all</button>
+          </div>
+        </form>
+
+        <div style="margin-top:12px" class="muted">Tip: choose a date (top-right) to view daily totals.</div>
+      </div>
+
+      <!-- Middle: dashboard -->
+      <div>
+        <h3>Dashboard</h3>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <label class="muted">Select date:</label>
+          <input id="viewDate" type="date" />
+        </div>
+
+        <div class="summary">
+          <div class="stat">
+            <div class="muted">Daily Income</div>
+            <div id="dailyIncome" style="font-weight:600;font-size:18px">₹0.00</div>
+          </div>
+          <div class="stat">
+            <div class="muted">Daily Expense</div>
+            <div id="dailyExpense" style="font-weight:600;font-size:18px">₹0.00</div>
+          </div>
+          <div class="stat">
+            <div class="muted">Daily Balance</div>
+            <div id="dailyBalance" style="font-weight:700;font-size:18px">₹0.00</div>
+          </div>
+          <div class="stat">
+            <div class="muted">This Month Balance</div>
+            <div id="monthBalance" style="font-weight:600;font-size:16px">₹0.00</div>
+          </div>
+          <div class="stat">
+            <div class="muted">Lifetime Balance</div>
+            <div id="lifetimeBalance" style="font-weight:600;font-size:16px">₹0.00</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="card">
+          <canvas id="historyChart" height="120"></canvas>
+        </div>
+      </div>
+
+      <!-- Right: transactions list -->
+      <div>
+        <h3>Transactions</h3>
+        <div style="margin-bottom:8px;display:flex;gap:8px;align-items:center">
+          <select id="filterType">
+            <option value="all">All</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <input id="searchText" placeholder="Search description/category" />
+        </div>
+
+        <div class="card" style="max-height:420px;overflow:auto">
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Type</th><th>Category</th><th>Amount</th><th></th></tr>
+            </thead>
+            <tbody id="txTableBody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <footer style="margin-top:8px" class="muted">Want login/sync later? I can show Firebase / backend steps next.</footer>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js.js"></script>
